@@ -23,7 +23,7 @@ client = session.client('rds')
 token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)    
 #print("token: " + token)
 
-connection =  pymysql.connect(host=ENDPOINT, user=USER, passwd=token, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
+connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=token, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
 try:
     if connection.is_connected():
         print(f"Connessione al database {DBNAME} riuscita.")
