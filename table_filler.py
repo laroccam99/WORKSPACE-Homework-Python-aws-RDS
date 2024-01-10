@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 ENDPOINT="tutorial-database-1.cjug0u60whdi.eu-central-1.rds.amazonaws.com"
 PORT=3306
 USER="admin"
+PASSWORD="password"
 REGION="eu-central-1"
 DBNAME="tutorial-database-1"
 SSLCERTIFICATE = 'global-bundle.pem'
@@ -23,7 +24,7 @@ client = session.client('rds')
 token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)    
 #print("token: " + token)
 
-connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=token, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
+connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
 try:
     if connection.is_connected():
         print(f"Connessione al database {DBNAME} riuscita.")
