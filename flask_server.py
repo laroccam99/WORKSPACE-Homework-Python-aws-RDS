@@ -10,10 +10,10 @@ def get_telemetry_data():
 
     # Connessione al database
     db_config = {
-        'user': 'nome-utente',
+        'user': 'admin',
         'password': 'password',
-        'host': 'nome-del-tuo-endpoint-rds',
-        'database': 'RobotTelemetry',
+        'host': 'tutorial-database-1.cjug0u60whdi.eu-central-1.rds.amazonaws.com',
+        'database': 'tutorial-database-1',
         'raise_on_warnings': True
     }
     connection = mysql.connector.connect(**db_config)

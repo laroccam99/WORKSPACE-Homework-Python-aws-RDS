@@ -5,11 +5,11 @@ import os
 import random
 from datetime import datetime, timedelta
 
-ENDPOINT="database-test1.cjug0u60whdi.eu-central-1.rds.amazonaws.com"
+ENDPOINT="tutorial-database-1.cjug0u60whdi.eu-central-1.rds.amazonaws.com"
 PORT=3306
 USER="admin"
 REGION="eu-central-1"
-DBNAME="database-test1"
+DBNAME="tutorial-database-1"
 SSLCERTIFICATE = 'global-bundle.pem'
 
 os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
