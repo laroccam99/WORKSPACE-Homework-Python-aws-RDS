@@ -26,20 +26,20 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
 #connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
 connection = pymysql.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
-def is_connected(conn):
+def is_connected(connection):
     try:
-        conn.ping(reconnect=True)  # Verifica la connessione al database
+        connection.ping(reconnect=True)  # Verifica la connessione al database
         return True
     except:
         return False
 print("Connessione al database riuscita!")
 
 try:
-    if is_connected():
+    if is_connected(connection):
         print(f"Connessione pymysql al database {DBNAME} riuscita.")
 except mysql.connector.Error as e:
         print(f"Errore durante la connessione al database: {e}")
 finally:
-    if is_connected():
+    if is_connected(connection):
         connection.close()
         print("Connessione al database chiusa.")

@@ -23,14 +23,14 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 
 def is_connected(conn):
     try:
-        conn.ping(reconnect=True)  # Verifica la connessione al database
+        connection.ping(reconnect=True)  # Verifica la connessione al database
         return True
     except:
         return False
 
 connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT)
 try:
-    if is_connected():
+    if is_connected(connection):
         print(f"Connessione al database {DBNAME} riuscita.")
 
         create_table_query = """
@@ -80,6 +80,6 @@ except Exception as e:
     print(f"Errore durante la connessione al database: {str(e)}")
 
 finally:
-    if is_connected():
+    if is_connected(connection):
         connection.close()
         print("Connessione al database chiusa.")
