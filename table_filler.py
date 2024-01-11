@@ -21,7 +21,7 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)    
 #print("token: " + token)
 
-def is_connected(conn):
+def is_connected(connection):
     try:
         connection.ping(reconnect=True)  # Verifica la connessione al database
         return True
