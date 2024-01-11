@@ -16,17 +16,21 @@ SSLCERTIFICATE = 'global-bundle.pem'
 os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 
 #gets the credentials from .aws/credentials
-session = boto3.Session(profile_name='default')
-client = session.client('rds')
-#print("Access key: "+ session.get_credentials().access_key)
-#print("Secret key: " + session.get_credentials().secret_key)
-
-token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)    
+#session = boto3.Session(profile_name='default')
+#client = session.client('rds')
+#token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)    
 #print("token: " + token)
+
+def is_connected(conn):
+    try:
+        conn.ping(reconnect=True)  # Verifica la connessione al database
+        return True
+    except:
+        return False
 
 connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT)
 try:
-    if connection.is_connected():
+    if is_connected():
         print(f"Connessione al database {DBNAME} riuscita.")
 
         create_table_query = """
@@ -76,6 +80,6 @@ except Exception as e:
     print(f"Errore durante la connessione al database: {str(e)}")
 
 finally:
-    if connection.is_connected():
+    if is_connected():
         connection.close()
         print("Connessione al database chiusa.")
