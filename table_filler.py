@@ -1,5 +1,4 @@
 import mysql.connector
-import boto3
 import os
 
 import random
@@ -21,7 +20,7 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)    
 #print("token: " + token)
 
-connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
+connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT, db=DBNAME)
 try:
     if connection.is_connected():
         print(f"Connessione al database {DBNAME} riuscita.")
@@ -38,6 +37,7 @@ try:
         with connection.cursor() as cursor:     #crea il cursore per scorrere risultati ed eseguire query
             print(f"Cursore creato correttamente")
             cursor.execute(create_table_query)  #esegue la query
+            print(f"Query eseguita correttamente")
         connection.commit()                     #conferma creazione della tabella
 
         insert_query = """
@@ -68,12 +68,16 @@ try:
 
         with connection.cursor() as cursor:
             cursor.executemany(insert_query, records_to_insert)
+            print(f"Query eseguita correttamente")
         connection.commit()
 
 except mysql.connector.Error as e:
     print(f"Errore durante la connessione al database: {str(e)}")
 
 finally:
-    if connection.is_connected():
-        connection.close()
-        print("Connessione al database chiusa.")
+    try:
+        if connection.is_connected():
+            connection.close()
+            print("Connessione al database chiusa.")
+    except Exception as e:
+        print(f"Errore durante la chiusura della connessione al database: {str(e)}")

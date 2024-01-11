@@ -1,11 +1,6 @@
-import pymysql
-import boto3
-import os
-
-import random
-from datetime import datetime, timedelta
-
 import mysql.connector
+import os
+from datetime import datetime, timedelta
 
 ENDPOINT='tutorial-database-1.cjug0u60whdi.eu-central-1.rds.amazonaws.com'
 PORT=3306
@@ -24,7 +19,7 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #print("token: " + token)
 
 #connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
-connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
+connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT, db=DBNAME)
 create_table_query = """
         CREATE TABLE IF NOT EXISTS RobotTelemetry (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -47,6 +42,9 @@ try:
 except mysql.connector.Error as e:
         print(f"Errore durante la connessione al database: {e}")
 finally:
-    if connection.is_connected():
-        connection.close()
-        print("Connessione al database chiusa.")
+    try:
+        if connection.is_connected():
+            connection.close()
+            print("Connessione al database chiusa.")
+    except Exception as e:
+        print(f"Errore durante la chiusura della connessione al database: {str(e)}")
