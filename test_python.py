@@ -1,4 +1,4 @@
-#import pymysql
+import pymysql
 import boto3
 import os
 
@@ -13,7 +13,7 @@ USER='admin'
 PASSWORD='password'
 REGION='eu-central-1'
 DBNAME='tutorial-database-1'
-SSLCERTIFICATE = 'global-bundle.pem'
+#SSLCERTIFICATE = 'global-bundle.pem'
 
 os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 
@@ -27,12 +27,13 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #print("token: " + token)
 
 #connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
-connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
+#connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
+connection = pymysql.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
 print("Connessione al database riuscita!")
 
 try:
     if connection.is_connected():
-        print(f"Connessione al database {DBNAME} riuscita.")
+        print(f"Connessione pymysql al database {DBNAME} riuscita.")
 except mysql.connector.Error as e:
         print(f"Errore durante la connessione al database: {e}")
 finally:
