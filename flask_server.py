@@ -12,8 +12,8 @@ def get_telemetry_data():
     db_config = {
         'user': 'admin',
         'password': 'password',
-        'host': 'tutorial-database-1.cjug0u60whdi.eu-central-1.rds.amazonaws.com',
-        'database': 'tutorial-database-1',
+        'host': 'database-1.cjug0u60whdi.eu-central-1.rds.amazonaws.com',
+        'database': 'database_1_name',
         'raise_on_warnings': True
     }
     connection = mysql.connector.connect(**db_config)
