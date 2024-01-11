@@ -28,7 +28,7 @@ def is_connected(connection):
     except:
         return False
 
-connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT)
+connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, db=DBNAME)
 try:
     if is_connected(connection):
         print(f"Connessione al database {DBNAME} riuscita.")
