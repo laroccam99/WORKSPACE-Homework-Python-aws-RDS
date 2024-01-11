@@ -24,23 +24,28 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #print("token: " + token)
 
 #connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
-#connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
-connection = pymysql.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT, db='tutorial-database-1')
-def is_connected(connection):
-    try:
-        connection.ping(reconnect=True)  # Verifica la connessione al database
-        return True
-    except:
-        return False
-print("Connessione al database riuscita!")
+connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
+create_table_query = """
+        CREATE TABLE IF NOT EXISTS RobotTelemetry (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            speed DECIMAL(10, 2),
+            rotation DECIMAL(10, 2),
+            time DATETIME,
+            power INT
+        )"""
+insert_query = """
+        INSERT INTO RobotTelemetry (speed, rotation, time, power)
+        VALUES (%s, %s, %s, %s)"""
 
 try:
-    if is_connected(connection):
-        print(f"Connessione pymysql al database {DBNAME} riuscita.")
+    if connection.is_connected():
+        print(f"Connessione al database {DBNAME} riuscita.")
         cur = connection.cursor()
+        cur.execute(create_table_query)
+        connection.commit() 
 except mysql.connector.Error as e:
         print(f"Errore durante la connessione al database: {e}")
 finally:
-    if is_connected(connection):
+    if connection.is_connected():
         connection.close()
         print("Connessione al database chiusa.")

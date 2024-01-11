@@ -1,4 +1,4 @@
-import pymysql
+import mysql.connector
 import boto3
 import os
 
@@ -21,16 +21,9 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USER, Region=REGION)    
 #print("token: " + token)
 
-def is_connected(connection):
-    try:
-        connection.ping(reconnect=True)  # Verifica la connessione al database
-        return True
-    except:
-        return False
-
-connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, db=DBNAME)
+connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
 try:
-    if is_connected(connection):
+    if connection.is_connected():
         print(f"Connessione al database {DBNAME} riuscita.")
 
         create_table_query = """
@@ -80,6 +73,6 @@ except Exception as e:
     print(f"Errore durante la connessione al database: {str(e)}")
 
 finally:
-    if is_connected(connection):
+    if connection.is_connected():
         connection.close()
         print("Connessione al database chiusa.")
