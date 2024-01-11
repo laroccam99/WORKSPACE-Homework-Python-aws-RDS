@@ -27,7 +27,7 @@ os.environ['LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN'] = '1'
 #print("token: " + token)
 
 #connection = pymysql.connect(host=ENDPOINT, user=USER, passwd=PASSWORD, port=PORT, database=DBNAME, connect_timeout=10, ssl_ca='global-bundle.pem')
-connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, database=DBNAME, port=PORT)
+connection = mysql.connector.connect(host=ENDPOINT, user=USER, password=PASSWORD, port=PORT)
 print("Connessione al database riuscita!")
 
 try:
