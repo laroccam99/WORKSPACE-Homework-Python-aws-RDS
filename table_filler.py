@@ -36,6 +36,7 @@ try:
         )
         """
         with connection.cursor() as cursor:     #crea il cursore per scorrere risultati ed eseguire query
+            print(f"Cursore creato correttamente")
             cursor.execute(create_table_query)  #esegue la query
         connection.commit()                     #conferma creazione della tabella
 
@@ -61,7 +62,7 @@ try:
         num_tuples_to_generate = 1000  #Numero desiderato di tuple
         records_to_insert = []
         generated_tuples = generate_random_tuples(num_tuples_to_generate, records_to_insert)
-
+        print(f"{num_tuples_to_generate} Tuple generate correttamente")
         for record in generated_tuples:
             print(record)
 
@@ -69,7 +70,7 @@ try:
             cursor.executemany(insert_query, records_to_insert)
         connection.commit()
 
-except Exception as e:
+except mysql.connector.Error as e:
     print(f"Errore durante la connessione al database: {str(e)}")
 
 finally:

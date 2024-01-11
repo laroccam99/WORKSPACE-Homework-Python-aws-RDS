@@ -41,6 +41,7 @@ try:
     if connection.is_connected():
         print(f"Connessione al database {DBNAME} riuscita.")
         cur = connection.cursor()
+        print(f"Cursore creato correttamente")
         cur.execute(create_table_query)
         connection.commit() 
 except mysql.connector.Error as e:
